@@ -17,7 +17,7 @@ app.use('/api/content', contentRoutes);
 app.use('/api', searchRoutes);
 
 
-sequelize.sync({ alter: true })
+sequelize.sync({ force: true })
     .then(() => {
         console.log('Database connected and synchronized successfully.');
     })

@@ -1,6 +1,6 @@
 
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config'); // Adjust the path as necessary
+const sequelize = require('../config/db.config');
 
 const User = sequelize.define('User', {
   username: {
@@ -15,12 +15,7 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  // isDeleted: {
-  //   type: DataTypes.BOOLEAN,
-  //   allowNull: false,
-  //   defaultValue: false,
-  // }
+  }
 });
 
 module.exports = User;

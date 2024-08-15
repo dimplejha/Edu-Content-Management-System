@@ -1,3 +1,7 @@
 node_modules/
 database.sqlite
 .env
+config/config.json
+/migrations/20210823124536-create-users.js
+/migrations/20210823125536-create-courses.js
+/migrations/20240815141813-create-Lesson.js

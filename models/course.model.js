@@ -8,7 +8,8 @@ const Course = sequelize.define('Course', {
     allowNull: false
   },
   description: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: true,
   }
 });
 
