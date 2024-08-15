@@ -1,18 +1,10 @@
-const { Sequelize } = require('sequelize');
 
-// Create a new Sequelize instance
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite' // or use another database as needed
-});
 
-// Test the connection
-sequelize.authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
+const sequelize = require('../config/db.config');
+const User = require('./user.model');
 
-module.exports = sequelize;
+const initDB = async () => {
+  await sequelize.sync({ force: true });
+};
+
+module.exports = { User, initDB };

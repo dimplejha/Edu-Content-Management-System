@@ -12,16 +12,6 @@ exports.createCourse = async (req, res) => {
   }
 };
 
-// exports.getCourses = async (req, res) => {
-//   try {
-//     const courses = await Course.findAll({ include: 'Lessons' });
-//     res.status(200).json(courses);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
-
-
 exports.getCourses = async (req, res) => {
   try {
     let courses = myCache.get('courses');
@@ -34,6 +24,23 @@ exports.getCourses = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+
+exports.getCoursesbyId = async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const course = await Course.findByPk(courseId);
+
+    if (!course) {
+      return res.status(404).json({ status: false, error: 'Course not found' });
+    }
+
+    res.json({ status: true, course });
+  } catch (error) {
+    console.error('Error fetching course:', error);
+    res.status(500).json({ status: false, error: 'Server error' });
+  }
+}
 
 
 exports.updateCourse = async (req, res) => {

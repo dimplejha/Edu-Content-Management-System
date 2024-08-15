@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth.routes');
@@ -15,8 +16,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api', searchRoutes);
 
-// Database connection and sync
-sequelize.sync()
+
+sequelize.sync({ alter: true })
     .then(() => {
         console.log('Database connected and synchronized successfully.');
     })

@@ -9,22 +9,46 @@ exports.register = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   try {
-    const user = await User.create({ username, email, password: hashedPassword });
-    res.status(201).json({ message: 'User registered successfully!' });
+    await User.create({ username, email, password: hashedPassword });
+    return res.status(201).send({ message: 'User registered successfully!' });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    // return res.send.status(400).json({ message: error.message });
+    console.log(error.message)
+    return res.status(500).send({ message: error.message })
   }
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
+    //   if (!validator.isValidRequestBody(email)) {
+    //     res.status(400).send({ status: false, msg: "plese pass required parameters" })
+    //     return
+    //   }
+    //   if (!validator.isValid(email)) {
+    //     res.status(400).send({ status: false, msg: "Email is required" })
+    //     return
+    //   }
+    //   if (!validator.isRightFormatemail(email)) {
+    //     return res.status(404).send({ status: false, msg: "Invalid Email" })
+    //   }
 
-  const user = await User.findOne({ where: { email } });
-  if (!user) return res.status(400).json({ message: 'Email or password is wrong' });
+    //   if (!validator.isValid(password)) {
+    //     res.status(400).send({ status: false, msg: "Password is required" })
+    //     return
+    //   }
+    const user = await User.findOne({ where: { email } });
 
-  const validPass = await bcrypt.compare(password, user.password);
-  if (!validPass) return res.status(400).json({ message: 'Invalid password' });
-
-  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: '1h' });
-  res.header('Authorization', token).json({ token });
+    if (!user) {
+      return res.status(400).send({ status: false, error: 'Invalid credentials' })
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send({ status: false, error: 'Invalid credentials' })
+    }
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return res.status(400).send({ status: true, user, token })
+  } catch (error) {
+    return res.status(500).send({ status: false, error: error.message })
+  }
 };

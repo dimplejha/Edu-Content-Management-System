@@ -2,7 +2,7 @@
 
 // lesson.model.js
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('./index');
+const sequelize = require('../config/db.config');
 const Course = require('./course.model');
 
 const Lesson = sequelize.define('Lesson', {
