@@ -48,9 +48,6 @@ Documentation: Clear and comprehensive documentation of the code and API.
 Problem-Solving: Demonstrated ability to tackle challenges and make informed decisions during development.
 
 
-Deadline:
-
-Best time to submit the task is within 48hrs of receiving the task Description.
 
 
 
